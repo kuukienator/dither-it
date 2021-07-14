@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Dither It!</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <style>
+            body,
+            html {
+                font-family: 'Nunito', sans-serif;
+            }
+
+            body {
+                margin: 0;
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+            }
+
+            header,
+            footer {
+                width: 100%;
+                text-align: center;
+            }
+
+            footer {
+                font-size: 1.2rem;
+            }
+
+            main {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #controls {
+                margin-top: 1rem;
+            }
+
+            #dropZone {
+                height: 600px;
+                display: flex;
+                justify-content: center;
+                position: relative;
+                max-height: 65vh;
+            }
+
+            .waitingContainer {
+                border: 5px solid black;
+                border-radius: 2rem;
+            }
+
+            .waitingContainer,
+            .loadingContainer {
+                height: 100%;
+                width: 50vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 2rem;
+                text-align: center;
+            }
+
+            .waitingContainer.is-hovering {
+                border-style: dashed;
+            }
+            .filePicker {
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                top: 0;
+                width: 100%;
+            }
+
+            .filePicker > input {
+                display: none;
+            }
+
+            #dropZone.is-waiting > canvas {
+                display: none;
+            }
+
+            #dropZone.is-waiting > .loadingContainer {
+                display: none;
+            }
+
+            #dropZone.is-loading > canvas {
+                display: none;
+            }
+
+            #dropZone.is-loading > .waitingContainer {
+                display: none;
+            }
+
+            #dropZone.is-loaded > .waitingContainer {
+                display: none;
+            }
+
+            #dropZone.is-loaded > .loadingContainer {
+                display: none;
+            }
+
+            #canvas {
+                height: 600px;
+                max-height: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Dither It!</h1>
+        </header>
+        <main>
+            <div id="dropZone" class="is-waiting">
+                <canvas id="canvas"></canvas>
+                <div class="waitingContainer">
+                    <p>Drop or choose an image.</p>
+                </div>
+                <div class="loadingContainer">Loading...</div>
+                <label class="filePicker">
+                    <input type="file" />
+                </label>
+            </div>
+            <div id="controls">
+                <select name="method" id="method">
+                    <option value="0">Bayer 4</option>
+                    <option value="1">Bayer 16</option>
+                    <option value="2">Bayer 64</option>
+                </select>
+
+                <label>
+                    Primary
+                    <input
+                        type="color"
+                        id="primaryColorInput"
+                        name="primaryColor"
+                        value="#000000"
+                /></label>
+
+                <label>
+                    Secondary
+                    <input
+                        type="color"
+                        id="secondaryColorInput"
+                        name="secondaryColor"
+                        value="#ffffff"
+                /></label>
+
+                <button id="saveImageButton">Save image</button>
+            </div>
+        </main>
+        <footer>
+            <b
+                >Built by
+                <a href="https://kuukienator.eu/">Emmanuel Meinike</a> /
+                <a
+                    href="https://twitter.com/kuukienator"
+                    target="_blank"
+                    rel="noopener"
+                    >@kuukienator</a
+                >
+                - 2021</b
+            >
+        </footer>
+        <script type="module">
+            import { init } from './scripts/main.js';
+
+            const dropZoneElement = document.querySelector('#dropZone');
+            const methodSelectElement = document.querySelector('#method');
+            const waitingContainerElement =
+                document.querySelector('.waitingContainer');
+            const filePickerElement =
+                document.querySelector('.filePicker>input');
+            const canvasElement = document.querySelector('#canvas');
+            const saveImageButton = document.querySelector('#saveImageButton');
+
+            const primaryColorInput =
+                document.querySelector('#primaryColorInput');
+            const secondaryColorInput = document.querySelector(
+                '#secondaryColorInput'
+            );
+
+            init({
+                dropZoneElement,
+                methodSelectElement,
+                waitingContainerElement,
+                filePickerElement,
+                canvasElement,
+                saveImageButton,
+                primaryColorInput,
+                secondaryColorInput,
+            });
+        </script>
+    </body>
+</html>
