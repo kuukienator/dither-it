@@ -32,7 +32,7 @@
             }
 
             footer {
-                font-size: 1.2rem;
+                font-size: 1rem;
             }
 
             main {
@@ -43,10 +43,28 @@
 
             #controls {
                 margin-top: 1rem;
+                display: flex;
+                flex-direction: column;
+            }
+
+            button {
+                margin-top: 1rem;
+                background: black;
+                color: white;
+                border: none;
+                padding: 0.5rem;
+                font-size: 1rem;
+                cursor: pointer;
+                font-weight: bold;
+            }
+
+            button:hover {
+                background: #484848;
             }
 
             #dropZone {
-                height: 600px;
+                /* height: 600px; */
+                width: 100%;
                 display: flex;
                 justify-content: center;
                 position: relative;
@@ -56,12 +74,15 @@
             .waitingContainer {
                 border: 5px solid black;
                 border-radius: 2rem;
+                display: flex;
+                flex-direction: column;
             }
 
             .waitingContainer,
             .loadingContainer {
-                height: 100%;
-                width: 50vh;
+                height: 400px;
+                width: 600px;
+                max-width: 85vw;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -110,8 +131,58 @@
             }
 
             #canvas {
-                height: 600px;
-                max-height: 100%;
+                /* height: 600px; */
+                /* max-height: 100%; */
+                width: 100%;
+            }
+
+            .loadingContainer > div {
+                position: relative;
+                width: 150px;
+                height: 150px;
+            }
+
+            .circle {
+                width: 150px;
+                height: 150px;
+                border-radius: 50%;
+                background: rgba(0, 0, 0, 0.5);
+
+                position: absolute;
+            }
+
+            .circle-1 {
+                animation: circle-pulse 2s infinite ease-out;
+            }
+
+            .circle-2 {
+                animation: circle-pulse-reverse 2s infinite ease-out;
+            }
+
+            @keyframes circle-pulse {
+                0% {
+                    transform: scale(0);
+                }
+
+                50% {
+                    transform: scale(1);
+                }
+                100% {
+                    transform: scale(0);
+                }
+            }
+
+            @keyframes circle-pulse-reverse {
+                0% {
+                    transform: scale(1);
+                }
+
+                50% {
+                    transform: scale(0);
+                }
+                100% {
+                    transform: scale(1);
+                }
             }
         </style>
     </head>
@@ -123,45 +194,55 @@
             <div id="dropZone" class="is-waiting">
                 <canvas id="canvas"></canvas>
                 <div class="waitingContainer">
-                    <p>Drop or choose an image.</p>
+                    <span style="font-size: 5rem">🖼️</span>
+                    <span>Drop or choose an image.</span>
                 </div>
-                <div class="loadingContainer">Loading...</div>
+                <div class="loadingContainer">
+                    <div>
+                        <div class="circle circle-1"></div>
+                        <div class="circle circle-2"></div>
+                    </div>
+                </div>
                 <label class="filePicker">
                     <input type="file" />
                 </label>
             </div>
             <div id="controls">
-                <select name="method" id="method">
-                    <option value="0">Bayer 4</option>
-                    <option value="1">Bayer 16</option>
-                    <option value="2">Bayer 64</option>
-                </select>
+                <div>
+                    <label>
+                        Quality
+                        <select name="method" id="method">
+                            <option value="0">low</option>
+                            <option value="1">med</option>
+                            <option value="2">high</option>
+                        </select>
+                    </label>
 
-                <label>
-                    Primary
-                    <input
-                        type="color"
-                        id="primaryColorInput"
-                        name="primaryColor"
-                        value="#000000"
-                /></label>
+                    <label>
+                        Primary
+                        <input
+                            type="color"
+                            id="primaryColorInput"
+                            name="primaryColor"
+                            value="#000000"
+                    /></label>
 
-                <label>
-                    Secondary
-                    <input
-                        type="color"
-                        id="secondaryColorInput"
-                        name="secondaryColor"
-                        value="#ffffff"
-                /></label>
+                    <label>
+                        Secondary
+                        <input
+                            type="color"
+                            id="secondaryColorInput"
+                            name="secondaryColor"
+                            value="#ffffff"
+                    /></label>
+                </div>
 
-                <button id="saveImageButton">Save image</button>
+                <button id="saveImageButton">SAVE IMAGE</button>
             </div>
         </main>
         <footer>
             <b
-                >Built by
-                <a href="https://kuukienator.eu/">Emmanuel Meinike</a> /
+                >Built by <a href="https://kuukienator.eu/">Emmanuel</a> /
                 <a
                     href="https://twitter.com/kuukienator"
                     target="_blank"

@@ -164,6 +164,9 @@ export const init = ({
     });
 
     saveImageButton.addEventListener('click', () => {
+        if (!currentImage) {
+            return;
+        }
         saveImage(canvasElement, {
             name: currentFile.name,
             type: currentFile.type,
