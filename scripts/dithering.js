@@ -34,6 +34,7 @@ export const dither = (
     canvas.width = width;
     canvas.height = height;
 
+    ctx.imageSmoothingEnabled = false;
     ctx.drawImage(sourceImage, 0, 0);
 
     const imageData = ctx.getImageData(0, 0, width, height);

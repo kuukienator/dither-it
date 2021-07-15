@@ -45,6 +45,8 @@
                 margin-top: 1rem;
                 display: flex;
                 flex-direction: column;
+                width: 400px;
+                max-width: 95vw;
             }
 
             button {
@@ -73,9 +75,10 @@
 
             .waitingContainer {
                 border: 5px solid black;
-                border-radius: 2rem;
+                /* border-radius: 2rem; */
                 display: flex;
                 flex-direction: column;
+                border-style: dashed;
             }
 
             .waitingContainer,
@@ -91,7 +94,24 @@
             }
 
             .waitingContainer.is-hovering {
-                border-style: dashed;
+                border-style: solid;
+                background-color: #e0dede;
+            }
+
+            .pre-hover {
+                display: block;
+            }
+
+            .post-hover {
+                display: none;
+            }
+
+            .waitingContainer.is-hovering > .pre-hover {
+                display: none;
+            }
+
+            .waitingContainer.is-hovering > .post-hover {
+                display: block;
             }
             .filePicker {
                 position: absolute;
@@ -133,7 +153,9 @@
             #canvas {
                 /* height: 600px; */
                 /* max-height: 100%; */
-                width: 100%;
+                /* width: 100%; */
+                max-width: 100%;
+                max-height: 100%;
             }
 
             .loadingContainer > div {
@@ -184,6 +206,25 @@
                     transform: scale(1);
                 }
             }
+
+            input[type='color'] {
+                width: 40px;
+                height: 40px;
+            }
+
+            #controls > div {
+                display: flex;
+                justify-content: center;
+            }
+            #controls label {
+                display: flex;
+                align-items: center;
+                margin: 0 0.5rem;
+            }
+
+            #controls label > * {
+                margin-left: 0.5rem;
+            }
         </style>
     </head>
     <body>
@@ -194,8 +235,13 @@
             <div id="dropZone" class="is-waiting">
                 <canvas id="canvas"></canvas>
                 <div class="waitingContainer">
-                    <span style="font-size: 5rem">🖼️</span>
-                    <span>Drop or choose an image.</span>
+                    <div class="pre-hover">
+                        <!-- <span style="font-size: 5rem">🖼️</span> -->
+                        <span>Drop or choose an image.</span>
+                    </div>
+                    <div class="post-hover">
+                        <span>Drop it!</span>
+                    </div>
                 </div>
                 <div class="loadingContainer">
                     <div>
@@ -210,7 +256,7 @@
             <div id="controls">
                 <div>
                     <label>
-                        Quality
+                        <!-- Quality: -->
                         <select name="method" id="method">
                             <option value="0">low</option>
                             <option value="1">med</option>
@@ -219,7 +265,7 @@
                     </label>
 
                     <label>
-                        Primary
+                        <!-- Main: -->
                         <input
                             type="color"
                             id="primaryColorInput"
@@ -228,7 +274,7 @@
                     /></label>
 
                     <label>
-                        Secondary
+                        <!-- Background: -->
                         <input
                             type="color"
                             id="secondaryColorInput"
